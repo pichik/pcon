@@ -34,6 +34,6 @@ Output:
 <?xml version="1.0" encoding="UTF-8"?>
 <ListOfParams>
 <param1>value1</param1>
-<param2><value2</param2>
+<param2>value2</param2>
 </ListOfParams>
 ```
