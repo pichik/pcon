@@ -16,7 +16,7 @@ pcon is a tool for converting list of parameters to different MIME types.
 `-s` add value to all params  
 `-u` append unique values  
 `-a` additional string (works only with xml or form-data)  
-    xml - root element (default is `<root>`)  
+    xml - root element (default is `root`)  
     form-data - boundary (default is `-------boundary`)  
 
 
