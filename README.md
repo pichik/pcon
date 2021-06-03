@@ -10,7 +10,7 @@ application/x-www-form-urlencoded   `query`
 
 ### Flags
 
-`-t` MIME type
+`-t` MIME type  
 `-s` add value to all params
 `-u` append unique values
 `-a` additional string (works only with xml or form-data)
