@@ -1,5 +1,10 @@
 #!/bin/bash
 
+#
+# Name: Param Converter
+# Author: Pichik
+#
+
 type=''
 string=''
 unique=false
