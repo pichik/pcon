@@ -20,13 +20,15 @@ pcon is a tool for converting list of parameters to different MIME types.
 `-h` show usage
 
 ## Installation
+
 1. `wget https://raw.githubusercontent.com/pichik/pcon/main/pcon.sh`
 2. `chmod +x pcon.sh`
 3. `mv pcon.sh /usr/local/bin/pcon`
 
 ## Usage
-`cat wordlist.txt | pcon -t json -u -s value123`  
-`cat params.txt | pcon -t query -u`
+
+`cat wordlist.txt | pcon -t query -u -s value123`  
+`echo "isAdmin subscribed" | pcon -t json -s true`
 
 ### Example
 
