@@ -2,10 +2,10 @@
 pcon is a tool for converting list of parameters to different MIME types.
 
 Currently supported MIME types:
-application/json                    `json`  
-application/xml                     `xml`  
-multipart/form-data                 `form-data`  
-application/x-www-form-urlencoded   `query`  
+`json`      application/json  
+`xml`       application/xml  
+`form-data` multipart/form-data  
+`query`     application/x-www-form-urlencoded  
 
 
 ### Flags
@@ -23,10 +23,10 @@ application/x-www-form-urlencoded   `query`
 
 ### Example
 
-Input:
+Input:  
 `echo 'param1 param2' | pcon -t xml -s value -a ListOfParams -u`
 
-Output:
+Output:  
 ```
 <?xml version="1.0" encoding="UTF-8"?>
 <ListOfParams>
