@@ -34,8 +34,8 @@ FLAGS:
   -h show usage
 
 USAGE:
-   `cat wordlist.txt | pcon -t query -u -s value123`  
-   `echo "isAdmin isSubscribed" | pcon -t json -s true`
+   cat wordlist.txt | pcon -t query -u -s value123  
+   echo "isAdmin isSubscribed" | pcon -t json -s true
 
 EXAMPLE:
  Input:
