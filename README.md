@@ -21,7 +21,7 @@ pcon is a tool for converting list of parameters to different MIME types.
 
 
 ## Usage
-`cat wordlist.txt | pcon -t json -u -s value123`
+`cat wordlist.txt | pcon -t json -u -s value123`  
 `cat params.txt | pcon -t query -u`
 
 ### Example
