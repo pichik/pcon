@@ -18,7 +18,7 @@ pcon is a tool for converting list of parameters to different MIME types.
 `-a` additional string (works only with xml or form-data)  
     xml - root element (default is `root`)  
     form-data - boundary (default is `-------boundary`)  
-
+`-h` show usage
 
 ## Usage
 `cat wordlist.txt | pcon -t json -u -s value123`  
