@@ -2,8 +2,6 @@
 
 ## Description
 pcon is a tool for converting list of parameters to different MIME types.  
-If you are constantly adding new parameters to your wordlist,   
-this tool can help you easily convert them to most used http mime types.
 &nbsp;&nbsp;  
 ### Currently supported MIME types:  
 `json`      application/json  
