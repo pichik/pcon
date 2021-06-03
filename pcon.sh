@@ -65,10 +65,6 @@ if [ $unique == true ]; then
 	string="${string}unique1337"
 fi
 
-if [ -z $type ]; then
-	echo "Requires MIME type -t (see -h for more info)"
-fi
-
 case $type in
 	json)
 	echo "{"
@@ -84,7 +80,7 @@ case $type in
 	echo $input | sed 's/\s/\n/g' | sed 's/$/>/' | sed "s/.*/<&${string}<\/&/" | awk '{gsub("unique1337",NR,$0);print}'
 	echo "</$addition>"
 	;;
-	multipart)
+	form-data)
 	if [ -z $addition ]; then
 		addition="-------boundary"
 	fi
@@ -93,5 +89,11 @@ case $type in
 	;;
 	query)
 	echo $input | sed 's/\s/\n/g' | sed -e "s/$/=${string}/g" | awk '{gsub("unique1337",NR,$0);print}' | sed ':a;N;$!ba;s/\n/\&/g'
+	;;
+	"")
+	echo "Requires MIME type -t (see -h for more info)"
+	;;
+	*)
+	echo "Supported MIME types:json xml form-data query"
 	;;
 esac
