@@ -11,6 +11,7 @@ unique=false
 addition=''
 input="$(</dev/stdin)"
 
+### Description
 print_usage() {
 cat << EOF
 pcon - param converter
@@ -30,6 +31,7 @@ FLAGS:
   -a additional string (works only with xml or form-data)
      xml - root element (default is <root>)
      form-data - boundary (default is -------boundary)
+  -h show usage
 
 USAGE:
    cat wordlist.txt | pcon -t json -u -s value123
@@ -46,6 +48,7 @@ EXAMPLE:
    </ListOfParams>
 EOF
 }
+###
 
 while getopts 't:s:a:uh' flag; do
   	case "${flag}" in
@@ -60,6 +63,10 @@ done
 
 if [ $unique == true ]; then
 	string="${string}unique1337"
+fi
+
+if [ -z $type ]; then
+	echo "Requires MIME type -t (see -h for more info)"
 fi
 
 case $type in
