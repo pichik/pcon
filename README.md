@@ -1,4 +1,6 @@
 # pcon - param converter
+
+## Description
 pcon is a tool for converting list of parameters to different MIME types.
 
 Currently supported MIME types:  
@@ -18,7 +20,7 @@ Currently supported MIME types:
     form-data - boundary (default is `-------boundary`)  
 
 
-# Usage
+## Usage
 `cat wordlist.txt | pcon -t json -u -s value123`
 
 ### Example
