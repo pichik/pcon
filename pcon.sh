@@ -34,8 +34,8 @@ FLAGS:
   -h show usage
 
 USAGE:
-   cat wordlist.txt | pcon -t query -u -s value123  
-   echo "isAdmin isSubscribed" | pcon -t json -s true
+   cat wordlist.txt | pcon -t json -u -s value123
+   cat params.txt | pcon -t query -u
 
 EXAMPLE:
  Input:
@@ -50,6 +50,7 @@ EOF
 }
 ###
 
+# Setup flags
 while getopts 't:s:a:uh' flag; do
   	case "${flag}" in
     		t) type="${OPTARG}" ;;
@@ -61,10 +62,12 @@ while getopts 't:s:a:uh' flag; do
   	esac
 done
 
+# Add unique word to string, if -u is provided for later recognition
 if [ $unique == true ]; then
 	string="${string}unique1337"
 fi
 
+# Switch between MIME types
 case $type in
 	json)
 	echo "{"
