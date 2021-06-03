@@ -7,7 +7,7 @@ Currently supported MIME types:
 `json`      application/json  
 `xml`       application/xml  
 `form-data` multipart/form-data  
-`query`     application/x-www-form-urlencoded  
+`query`     application/x-www-form-urlencoded or query string   
 
 
 ### Flags
