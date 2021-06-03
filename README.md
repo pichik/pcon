@@ -28,7 +28,7 @@ pcon is a tool for converting list of parameters to different MIME types.
 ## Usage
 
 `cat wordlist.txt | pcon -t query -u -s value123`  
-`echo "isAdmin subscribed" | pcon -t json -s true`
+`echo "isAdmin isSubscribed" | pcon -t json -s true`
 
 ### Example
 
