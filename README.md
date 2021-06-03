@@ -9,7 +9,6 @@ pcon is a tool for converting list of parameters to different MIME types.
 `form-data` multipart/form-data  
 `query`     application/x-www-form-urlencoded or query string   
 
-
 ### Flags
 
 `-t` MIME type  
@@ -19,6 +18,11 @@ pcon is a tool for converting list of parameters to different MIME types.
     xml - root element (default is `root`)  
     form-data - boundary (default is `-------boundary`)  
 `-h` show usage
+
+## Installation
+1. `wget https://raw.githubusercontent.com/pichik/pcon/main/pcon.sh`
+2. `chmod +x pcon.sh`
+3. `mv pcon.sh /usr/local/bin/pcon`
 
 ## Usage
 `cat wordlist.txt | pcon -t json -u -s value123`  
