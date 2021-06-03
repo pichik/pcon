@@ -1,8 +1,8 @@
 # pcon - param converter
 
 ## Description
-pcon is a tool for converting list of parameters to different MIME types.
- a
+pcon is a tool for converting list of parameters to different MIME types.  
+&nbsp;
 Currently supported MIME types:  
 `json`      application/json  
 `xml`       application/xml  
