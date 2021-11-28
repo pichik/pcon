@@ -5,18 +5,15 @@
 # Author: Pichik
 #
 
-type=''
-string=''
 unique=false
-addition=''
 input="$(</dev/stdin)"
 
 ### Description
 print_usage() {
 cat << EOF
-pcon - param converter
 DESCRIPTION:
-pcon is a tool for converting list of parameters to different MIME types.
+   pcon - param converter
+   pcon is a tool for converting list of parameters to different MIME types.
 
 CURRENTLY SUPPORTED MIME TYPES:
    json		application/json
@@ -62,7 +59,7 @@ while getopts 't:s:a:uh' flag; do
   	esac
 done
 
-# Add unique word to string, if -u is provided for later recognition
+# Add unique word to string for later recognition
 if [ $unique == true ]; then
 	string="${string}unique1337"
 fi
@@ -91,7 +88,7 @@ case $type in
 	echo "$addition--"
 	;;
 	query)
-	echo $input | sed 's/\s/\n/g' | sed -e "s/$/=${string}/g" | awk '{gsub("unique1337",NR,$0);print}' | sed ':a;N;$!ba;s/\n/\&/g'
+	echo $input | sed 's/\s/\n/g' | sed -e "s/$/=${string}/g" | awk '{gsub("unique1337",NR,$0);print}' | sed ':a;N;$!ba;s/\n/\&/g' | sed 's/\[/%5b/g' | sed 's/\]/%5d/g'
 	;;
 	"")
 	echo "Requires MIME type -t (see -h for more info)"
