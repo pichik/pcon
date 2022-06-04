@@ -24,6 +24,7 @@ CURRENTLY SUPPORTED MIME TYPES:
 FLAGS:
   -t type (see supported mime types)
   -s add value to all params
+  -m mirroring variable names to values
   -u append unique values
   -a additional string (works only with xml or form-data)
      xml - root element (default is <root>)
@@ -36,23 +37,24 @@ USAGE:
 
 EXAMPLE:
  Input:
-   echo 'param1 param2' | pcon -t xml -s value -a ListOfParams -u
+   echo 'param1 param2' | pcon -t xml -s value -m -a ListOfParams -u
  Output:
    <?xml version="1.0" encoding="UTF-8"?>
    <ListOfParams>
-   <param1>value1</param1>
-   <param2><value2</param2>
+   <param1>param1value1</param1>
+   <param2>param2value2</param2>
    </ListOfParams>
 EOF
 }
 ###
 
 # Setup flags
-while getopts 't:s:a:uh' flag; do
+while getopts 't:s:a:muh' flag; do
   	case "${flag}" in
     		t) type="${OPTARG}" ;;
     		s) string="${OPTARG}" ;;
 		a) addition="${OPTARG}" ;;
+		m) mirror=true ;;
 		u) unique=true ;;
     		h) print_usage
        		exit 1 ;;
@@ -68,7 +70,7 @@ fi
 case $type in
 	json)
 	echo "{"
-	echo $input | sed 's/\s/\n/g' | sed -e 's/^/"/' -e "s/$/\":\"${string}\"/" -e '$!s/$/,/' | awk '{gsub("unique1337",NR,$0);print}'
+	echo $input | sed 's/\s/\n/g' | sed -e 's/^/"/' -e 's/$/":/' | ( [ $mirror ] && sed 's/\(^[^:]*\)\(.*\)/\1\2\1/' || sed 's/$/""/' ) | sed  -e "s/\"$/${string}\"/" -e '$!s/$/,/' | awk '{gsub("unique1337",NR,$0);print}'
 	echo "}"
 	;;
 	xml)
@@ -77,18 +79,18 @@ case $type in
 	fi
 	echo "<?xml version="1.0" encoding="UTF-8"?>"
 	echo "<$addition>"
-	echo $input | sed 's/\s/\n/g' | sed 's/$/>/' | sed "s/.*/<&${string}<\/&/" | awk '{gsub("unique1337",NR,$0);print}'
+	echo $input | sed 's/\s/\n/g' | sed 's/$/=/' | sed "s/$/${string}/" | ( [ $mirror ] && sed 's/\(^[^=]*\)\(=\)\(.*\)/<\1>\1\3<\/\1>/' || sed 's/\(^[^=]*\)\(=\)\(.*\)/<\1>\3<\/\1>/' ) | awk '{gsub("unique1337",NR,$0);print}'
 	echo "</$addition>"
 	;;
 	form-data)
 	if [ -z $addition ]; then
 		addition="-------boundary"
 	fi
-	echo $input | sed 's/\s/\n/g' | sed -e 's/^/Content-Disposition: form-data; name="/' -e 's/$/"/' | sed -e "s/^/$addition\n/" -e "s/$/\n\n$string/" | awk '{gsub("unique1337",NR,$0);print}'
+	echo $input | sed 's/\s/\n/g' | sed 's/$/=/'  | sed "s/$/${string}/" | ( [ $mirror ] && sed 's/\(^[^=]*\)\(=\)\(.*\)/Content-Disposition: form-data; name="\1"\n\n\1\3/' || sed 's/\(^[^=]*\)\(=\)\(.*\)/Content-Disposition: form-data; name="\1"\n\n\3/' ) | sed -e "s/Content-Disposition/$addition\nContent-Disposition/"  | awk '{gsub("unique1337",NR,$0);print}'
 	echo "$addition--"
 	;;
 	query)
-	echo $input | sed 's/\s/\n/g' | sed -e "s/$/=${string}/g" | awk '{gsub("unique1337",NR,$0);print}' | sed ':a;N;$!ba;s/\n/\&/g' | sed 's/\[/%5b/g' | sed 's/\]/%5d/g'
+	echo $input | sed 's/\s/\n/g' | sed "s/$/=/g" | ( [ $mirror ] && sed 's/\(^[^=]*\)\(.*\)/\1\2\1/' || cat ) | sed -e "s/$/${string}/g" | awk '{gsub("unique1337",NR,$0);print}' | sed ':a;N;$!ba;s/\n/\&/g' | sed 's/\[/%5b/g' | sed 's/\]/%5d/g'
 	;;
 	"")
 	echo "Requires MIME type -t (see -h for more info)"
