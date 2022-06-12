@@ -20,6 +20,8 @@ CURRENTLY SUPPORTED MIME TYPES:
    xml 		application/xml
    form-data 	multipart/form-data
    query 	application/x-www-form-urlencoded or query string
+   jq		convert json to query
+   qj		convert query to json
 
 FLAGS:
   -t type (see supported mime types)
@@ -73,6 +75,11 @@ case $type in
 	echo $input | sed 's/\s/\n/g' | sed -e 's/^/"/' -e 's/$/":/' | ( [ $mirror ] && sed 's/\(^[^:]*\)\(.*\)/\1\2\1/' || sed 's/$/""/' ) | sed  -e "s/\"$/${string}\"/" -e '$!s/$/,/' | awk '{gsub("unique1337",NR,$0);print}'
 	echo "}"
 	;;
+	qj)
+	printf "{\n\""
+	printf $input | sed 's/\&/\",\n\"/g' | sed 's/\=/\":\"/g'
+	printf "\"\n}\n"
+	;;
 	xml)
 	if [ -z $addition ]; then
 		addition="root"
@@ -91,6 +98,9 @@ case $type in
 	;;
 	query)
 	echo $input | sed 's/\s/\n/g' | sed "s/$/=/g" | ( [ $mirror ] && sed 's/\(^[^=]*\)\(.*\)/\1\2\1/' || cat ) | sed -e "s/$/${string}/g" | awk '{gsub("unique1337",NR,$0);print}' | sed ':a;N;$!ba;s/\n/\&/g' | sed 's/\[/%5b/g' | sed 's/\]/%5d/g'
+	;;
+	jq)
+	echo $input | sed 's/\"//g' | sed 's/:/=/g' | sed -E 's/, ?/\&/g' | sed 's/{//g' | sed 's/}//g'
 	;;
 	"")
 	echo "Requires MIME type -t (see -h for more info)"
