@@ -36,6 +36,7 @@ FLAGS:
 USAGE:
    cat wordlist.txt | pcon -t json -u -s value123
    cat params.txt | pcon -t query -u
+   cat params.json | pcon -t jq
 
 EXAMPLE:
  Input:
@@ -76,9 +77,9 @@ case $type in
 	echo "}"
 	;;
 	qj)
-	printf "{\n\""
-	printf $input | sed 's/\&/\",\n\"/g' | sed 's/\=/\":\"/g'
-	printf "\"\n}\n"
+	echo -e -n "{\n\""
+	echo -n $input | sed 's/\&/\",\n\"/g' | sed 's/\=/\":\"/g'
+	echo -e "\"\n}\n"
 	;;
 	xml)
 	if [ -z $addition ]; then
